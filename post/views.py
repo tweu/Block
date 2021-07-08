@@ -12,6 +12,15 @@ class PostDetail(DetailView):
     template_name = 'post/post-detail.html'
     context_object_name = 'post'
     # pk_url_kwarg = 'post_id'
+    
+    def get(self, request, *args, **kwargs):
+        response = super().get(request, *args, **kwargs)
+        post = self.object
+        post.views = post.views + 1
+        post.save()
+        return response
+
+
 
 class PostByCategory(ListView):
     model = Post
